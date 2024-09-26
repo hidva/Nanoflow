@@ -67,7 +67,7 @@ inline std::span<T> getSubSpan(const std::span<T>& span, int rank, int nranks) {
     return std::span{span.data() + rank * chunk_size, chunk_size};
 }
 
-template <typename T, std::integral... Lens>
+template <typename T, typename... Lens>
 inline std::array<std::span<T>, sizeof...(Lens)> splitSpan(const std::span<T>& span_in, Lens... lens) {
 	assert((span_in.size() == (0 + ... + lens)) &&
 		   "Subspan length sum mismatches with the input span");
@@ -84,7 +84,7 @@ inline std::array<std::span<T>, sizeof...(Lens)> splitSpan(const std::span<T>& s
 // Example, splitSpan({1,2,3,4}, {1,2}, 1) => {1,2} (2 is the overlapping suffix), {2,3,4} (4 is the suffix);
 template <typename T,
 		  size_t N,
-		  std::unsigned_integral TLen,
+		  typename TLen,
 		  template <class, size_t>
 		  class LensContainer>
 inline std::array<std::span<T>, N>

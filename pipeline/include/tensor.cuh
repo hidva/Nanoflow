@@ -165,10 +165,10 @@ struct pllmTensor {
 		return pllmTensor<T>{ptr + rank * chunk_dim * dim2, final_chunk_dim, dim2, layout};
 	}
 
-	template <std::integral... Lens>
+	template <typename... Lens>
 	std::array<pllmTensor<T>, sizeof...(Lens)> splitTensor(PllmDimension dim, Lens... lens) const {
 
-		static_assert((std::integral<decltype(lens)> && ...), "Lens must be of integral type");
+		static_assert((std::is_integral_v<decltype(lens)> && ...), "Lens must be of integral type");
 		assert(sameDirection(dim));
 
 		// Check if the sum of the provided lengths matches the total length in the specified dimension
@@ -199,7 +199,7 @@ struct pllmTensor {
  		return ret;
 	}
 
-	template <size_t N, std::unsigned_integral TLen, template <class, size_t> class LensContainer>
+	template <size_t N, typename TLen, template <class, size_t> class LensContainer>
 	inline std::array<pllmTensor<T>, N>
 	splitTensor(PllmDimension dim, const LensContainer<TLen, N>& lens, TLen suffix = 0) {
 		assert(sameDirection(dim));
@@ -219,7 +219,7 @@ struct pllmTensor {
 		return ret;
 	}
 
-	template <size_t N, std::unsigned_integral TLen, template <class, size_t> class LensContainer>
+	template <size_t N, typename TLen, template <class, size_t> class LensContainer>
 	inline std::array<pllmTensor<T>, N>
 	splitTensor(PllmDimension dim, const LensContainer<TLen, N>& lens, const LensContainer<TLen, N>& suffix) {
 		assert(sameDirection(dim));
