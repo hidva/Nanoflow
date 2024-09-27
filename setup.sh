@@ -1,3 +1,4 @@
+set -xe
 # init submodule dependencies
 git submodule init
 git submodule update
@@ -5,6 +6,15 @@ git submodule update
 # install dependencies
 apt update
 apt install python3
+apt install python3-pip
+
+mkdir -pv ~/.config/pip
+cat > ~/.config/pip/pip.conf << EOL
+[global]
+index-url = http://mirrors.aliyun.com/pypi/simple/
+trusted-host = mirrors.aliyun.com
+EOL
+
 pip3 install cmake
 apt install libopenmpi-dev
 apt install wget
@@ -28,9 +38,9 @@ sed -i '446,486s/^/\/\//' /usr/include/pybind11/detail/type_caster_base.h
 
 # install cmake 3.29.0
 cd ..
-wget https://github.com/Kitware/CMake/releases/download/v3.29.0-rc2/cmake-3.29.0-rc2-linux-x86_64.sh
-chmod +x cmake-3.29.0-rc2-linux-x86_64.sh
-./cmake-3.29.0-rc2-linux-x86_64.sh --prefix=/usr/local --exclude-subdir
+# wget https://github.com/Kitware/CMake/releases/download/v3.29.0-rc2/cmake-3.29.0-rc2-linux-x86_64.sh
+# chmod +x cmake-3.29.0-rc2-linux-x86_64.sh
+# ./cmake-3.29.0-rc2-linux-x86_64.sh --prefix=/usr/local --exclude-subdir
 
 
 # install nsight
@@ -58,7 +68,7 @@ cd 3rdparty/mscclpp
 
 mkdir -p build
 cd build
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/mscclpp -DBUILD_PYTHON_BINDINGS=OFF ..
+cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr/local/mscclpp -DBUILD_PYTHON_BINDINGS=OFF ..
 make -j mscclpp mscclpp_static
 make install/fast
 cd ../../../

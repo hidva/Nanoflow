@@ -156,7 +156,9 @@ if __name__ == "__main__":
     with open(args.config_path, 'r') as file:
         nanoflow_config = json.load(file)
     model_name = nanoflow_config["serve_configs"]["model"]
-
+    
+    # 类似 vllm save sharded weight. 
+    # 这里 hf_path 存放着模型原始目录. weight_path 将仅用于保存切分后的模型参数
     model_path = nanoflow_config["serve_configs"]["hf_path"]
     weightDir = nanoflow_config["serve_configs"]["weight_path"]
 
