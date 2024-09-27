@@ -44,10 +44,13 @@ void createInitData(vortexInitData& data, vortexModelWeight& weight, int rank) {
 	spdlog::info("allocate temp size = {} GB", kTempSize * sizeof(half) / 1024.0 / 1024.0 / 1024.0);
 
 
-	data.weight = weight;
-	data.weight_size = kWeightSize;
-	data.tmp_buffer = temp;
-	data.tmp_buffer_size = kTempSize;
+
+	data = {
+		.weight = weight,
+		.weight_size = kWeightSize,
+		.tmp_buffer = temp,
+		.tmp_buffer_size = kTempSize
+	};
 	
 	allocateKVData(data, rank);
 }
