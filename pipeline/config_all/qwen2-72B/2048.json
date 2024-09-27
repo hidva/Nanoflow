@@ -55,8 +55,8 @@
     "serve_configs": {
         "model": "Qwen/Qwen2-72B-Instruct",
         "actual_gpu_num": 8,
-        "weight_path": "./nanoflow_weight_qwen2-72B/",
-        "hf_path": "../../../hf/hub/models--Qwen--Qwen2-72B-Instruct/snapshots/fddbbd7b69a1fd7cf9b659203b37ae3eb89059e1",
+        "weight_path": "/code/models/Qwen2-72B-Chat-v3/",
+        "hf_path": "/code/models/Qwen2-72B-Chat-v3-raw",
         "pipeline_type": "KQVBIAS"
     }
   } 
