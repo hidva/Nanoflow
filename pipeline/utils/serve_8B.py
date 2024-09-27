@@ -636,8 +636,8 @@ if __name__ == "__main__":
 
     allocate_kv_data_batch = nanoflow_config["model_configs"]['allocate_kv_data_batch']
     pipetype = pipeline_map[nanoflow_config["serve_configs"]["pipeline_type"]]
-    model_name_or_path = nanoflow_config['serve_configs']['model']
-    tokenizer = AutoTokenizer.from_pretrained(nanoflow_config['serve_configs']['hf_path'])
+    model_name_or_path = nanoflow_config['serve_configs']['hf_path']
+    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
         
     nranks = nanoflow_config['serve_configs']['actual_gpu_num']
     pool = DistKVPool(1,8,128,1024 * nanoflow_config['model_configs']['allocate_kv_data_batch']//16,16,nranks)
